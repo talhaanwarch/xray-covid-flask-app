@@ -6,7 +6,7 @@ import tensorflow as tf
 #from tensorflow.keras.models import Sequential
 #from tensorflow.keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, BatchNormalization, Flatten
 import numpy as np
-from whitenoise import WhiteNoise
+#from whitenoise import WhiteNoise
 
 import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
@@ -19,7 +19,7 @@ COUNT = 0
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 1
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
-app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_dir, prefix='static/')
+# app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_dir, prefix='static/')
 #render index.html as the first page 
 @app.route('/')
 def man():
@@ -54,6 +54,6 @@ def home():
 @app.route('/load_img')
 def load_img():
     global COUNT
-    return send_from_directory('static', "{}.jpg".format(COUNT-1))
+    return send_from_directory(static_dir, "{}.jpg".format(COUNT-1))
 
 
