@@ -12,13 +12,14 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 #Loading h5 file containing our saved model from juptyer notebook
-myModel = tf.keras.models.load_model('static/CovidModelSave.h5')
 
 COUNT = 0
 
 app = Flask(__name__)
 app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 1
 static_dir = os.path.join(os.path.dirname(__file__), 'static')
+myModel = tf.keras.models.load_model(static_dir+'/CovidModelSave.h5')
+
 # app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_dir, prefix='static/')
 #render index.html as the first page 
 @app.route('/')
@@ -56,4 +57,12 @@ def load_img():
     global COUNT
     return send_from_directory(static_dir, "{}.jpg".format(COUNT-1))
 
+#Add an about.html page
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
 
+#Add an info.html page
+@app.route('/info.html')
+def info():
+    return render_template('info.html')
